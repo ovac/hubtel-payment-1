@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title></title>
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/highlight.dark.css">
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="/">
+                The title
+                <small class="hidden-xs hidden-sm">
+                    This is the default subtitle!
+                </small>
+            </a>
+
+            
+        </header>
+
+        <main class="container">
+            <div class="row">
+
+                
+                <section id="content" class="col-sm-12">
+                    <h1 id="description">Description</h1>
+<p><strong>Hubtel Payment</strong> android library allows you to easily integrate payment gateway into your android app and start accepting payments from within your android app.
+The gateway supports Mobile Wallets(MTN, Airtel, Tigo, Vodafone) &amp; Bank Cards payment. To signup for a merchant account visit <a href="https://unity.hubtel.com/account/signup">https://unity.hubtel.com/account/signup</a>. </p>
+<h1 id="download">Download</h1>
+<p><strong>Add a dependency using Gradle:</strong></p>
+<p>Add it in your root build.gradle(Project) at the end of repositories</p>
+<pre><code class="language-java">allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}</code></pre>
+<p>Add it in your build.gradle(Module)</p>
+<pre><code class="language-java">dependencies {
+    ...
+    compile 'com.github.deluakin:Hubtel-Payment-Android:v1.0'
+}</code></pre>
+<p><strong>Add a dependency using Maven:</strong></p>
+<pre><code class="language-java">&lt;repositories&gt;
+    &lt;repository&gt;
+        &lt;id&gt;jitpack.io&lt;/id&gt;
+        &lt;url&gt;https://jitpack.io&lt;/url&gt;
+    &lt;/repository&gt;
+&lt;/repositories&gt;</code></pre>
+<pre><code class="language-java">&lt;dependency&gt;
+    &lt;groupId&gt;com.github.deluakin&lt;/groupId&gt;
+    &lt;artifactId&gt;&gt;Hubtel-Payment-Android&lt;/artifactId&gt;
+    &lt;version&gt;v1.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<h1 id="how-do-i-use-this-library">How do I use this library</h1>
+<p>Simple use case will look something like this:</p>
+<pre><code class="language-java">try {
+    SessionConfiguration sessionConfiguration = new SessionConfiguration()
+        .Builder().setMasterKey("YOUR_MASTERKEY")
+        .setPrivateKey("YOUR_PRIVATEKEY")
+        .setToken("YOUR_TOKEN")
+        .setEnvironment(Environment.TEST_MODE)
+        .build();
+    MpowerPayments mpowerPayments = new MpowerPayments(sessionConfiguration);
+    mpowerPayments.setPaymentDetails(10, "This is a demo payment");
+    mpowerPayments.Pay(this);
+    mpowerPayments.setOnPaymentCallback(new OnPaymentResponse() {
+        @Override
+        public void onFailed(String token, String reason) {
+        }
+
+        @Override
+        public void onCancelled(String token) {
+        }
+
+        @Override
+        public void onSuccessful(String token) {
+        }
+    });
+}
+catch (MPowerPaymentException e) {
+    e.printStackTrace();
+}</code></pre>
+<h1 id="note">Note</h1>
+<p>You can set an endpoint url which the payment status and token can be posted(GET) to after payment has been completed.
+Hutel will append &quot;?token=INVOICE_TOKEN&amp;status=PAYMENT_STATUS&quot; to your URL.
+The <strong>status</strong> would either be pending, cancelled or completed depending on whether or not the customer has made payment for the transaction.</p>
+<pre><code class="language-java">SessionConfiguration sessionConfiguration = new SessionConfiguration()
+        ...
+        //token and status will be 
+        .setEndPointURL("URL")
+        ...</code></pre>
+<p>Make sure to switch the Environment to LIVE_MODE when releasing your app to the public</p>
+<pre><code class="language-java">SessionConfiguration sessionConfiguration = new SessionConfiguration()
+        ...
+        .setEnvironment(Environment.LIVE_MODE)
+        ...</code></pre>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p class="text-muted">
+                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>
